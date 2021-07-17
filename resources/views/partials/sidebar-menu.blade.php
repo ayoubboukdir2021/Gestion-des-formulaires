@@ -2,7 +2,7 @@
 
 <div class="sidebar-menu">
     <ul class="menu">
-        <li class="sidebar-title">Menu</li>
+        <li class="sidebar-title"> @if(Auth::user()->image != "" || Auth::user()->image != null) <img src="{{ asset('assets/users/'.Auth::user()->image) }}" alt="default" class="img-thumbnail" /> @else <img src="{{ asset('assets/users/default.png') }}" alt="..." class="img-thumbnail" /> @endif</li>
 
         <li class="sidebar-item @if($page=="dashboard") active @endif ">
             <a href="{{ route('home') }}" class='sidebar-link'>

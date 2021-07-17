@@ -601,7 +601,7 @@ class FormController extends Controller
 
                 if($validator->fails()) {
                     return redirect()->back()->with([
-                        'message' => "Le titre du formulaire est obligatoire",
+                        'message' => $validator->errors()->first(),
                         'alert-type' => 'danger',
                     ]);
                 }
@@ -937,17 +937,6 @@ class FormController extends Controller
     }
 
     public function export($id){
-
-        // $id = $id;
-        // $answer =  Answer::with(["formuser"])->whereHas('formuser',function($query) {
-            
-           
-        //     $query->where(["form_id"=>$id]);
-        // })->get();
-        
-        
-        
-            
-        return Excel::download(new AnswerExport($id), 'aswere'.date('Y-m-d').'.xlsx',\Maatwebsite\Excel\Excel::XLSX);
+        return Excel::download(new AnswerExport($id), 'answer'.date('Y-m-d').'.xlsx',\Maatwebsite\Excel\Excel::XLSX);
     }
 }

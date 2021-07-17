@@ -36,17 +36,17 @@ function AddQestion(){
                             div1.setAttribute('class',"card border border-primary");
                             div1.setAttribute('id',`component${nombrediv}`);
                             div1.setAttribute('name',"component");
-        
+
                             div2.setAttribute('class',"card-body");
                             div2.appendChild(h5);
-        
+
                             for(let i = 0 ; i<elements.length ; i++){
                                 div2.appendChild(elements[i]);
                             }
-        
+
                             div1.appendChild(div2);
                             submit.parentNode.insertBefore(div1 , submit)
-        
+
                             $.ajax({
                                 method:'GET',
                                 url:"/admin/form/store/add-field",
@@ -61,9 +61,9 @@ function AddQestion(){
                                     console.log("Error");
                                 }
                             });
-        
+
                         }else{
-                            
+
                         }
                     }else{
                         messagee("Choix multiple: Les options doivent être égales ou supérieures à deux");
@@ -78,17 +78,17 @@ function AddQestion(){
                             div1.setAttribute('class',"card border border-primary");
                             div1.setAttribute('id',`component${nombrediv}`);
                             div1.setAttribute('name',"component");
-        
+
                             div2.setAttribute('class',"card-body");
                             div2.appendChild(h5);
-        
+
                             for(let i = 0 ; i<elements.length ; i++){
                                 div2.appendChild(elements[i]);
                             }
-        
+
                             div1.appendChild(div2);
                             submit.parentNode.insertBefore(div1 , submit);
-        
+
                             $.ajax({
                                 method:'GET',
                                 url:"/admin/form/store/add-field",
@@ -103,14 +103,14 @@ function AddQestion(){
                                     tostererror();
                                 }
                             });
-        
+
                         }else{
-                            
+
                         }
                     }else{
                         messagee("Cases à cocher : Les options doivent être égales ou supérieures à deux");
                     }
-    
+
                 }else if(selectvalue == "select") {
                     nombre = document.getElementById("modal_numbers_select").value;
                     if(nombre>=2){
@@ -121,15 +121,15 @@ function AddQestion(){
                             div1.setAttribute('class',"card border border-primary");
                             div1.setAttribute('id',`component${nombrediv}`);
                             div1.setAttribute('name',"component");
-        
+
                             div2.setAttribute('class',"card-body");
                             div2.appendChild(h5);
-        
+
                             div2.appendChild(element);
-        
+
                             div1.appendChild(div2);
                             submit.parentNode.insertBefore(div1 , submit);
-        
+
                             $.ajax({
                                 method:'GET',
                                 url:"/admin/form/store/add-field",
@@ -149,28 +149,28 @@ function AddQestion(){
                         messagee("List déroulante : Les options doivent être égales ou supérieures à deux");
                     }
 
-    
+
                 }else {
                     element = NewElement(selectvalue , 1);
                     if(element != null) {
-    
+
                         div1.setAttribute('class',"card border border-primary");
                         div1.setAttribute('id',`component${nombrediv}`);
                         div1.setAttribute('name',"component");
-    
+
                         h5.setAttribute("name",`qestion_${nombrediv}`)
                         h5.textContent = title;
-    
-    
-    
+
+
+
                         div2.setAttribute('class',"card-body");
                         div2.appendChild(h5);
                         div2.appendChild(element);
-    
+
                         div1.appendChild(div2);
-    
+
                         submit.parentNode.insertBefore(div1 , submit);
-    
+
                         $.ajax({
                             method:'GET',
                             url:"/admin/form/store/add-field",
@@ -260,29 +260,29 @@ function NewElement(type , nombre) {
                     "attrname":`reponse_Q_${nombrediv}`,
                     "attrplaceholder":"radio",
                 };
-    
+
                 for(let i =0 ;i<nombre ;i++) {
                     let text  = document.getElementById("modal_radio_option_"+(i+1)).value;
                     if(text != "" && text != null) {
                         let div   = document.createElement("div");
                         let radio = document.createElement("input");
                         let label = document.createElement("label");
-        
+
                         div.setAttribute("class","form-check")
-        
+
                         radio.setAttribute("name", "radio_option_Q_"+nombrediv);
                         radio.setAttribute("type", "radio");
                         radio.setAttribute("class", "form-check-input mt-1");
                         radio.setAttribute("value", text);
-        
+
                         label.appendChild(radio);
                         label.appendChild(document.createTextNode(text));
-        
+
                         div.appendChild(label);
-        
+
                         let option = `option${i+1}`;
                         info[option]=text;
-        
+
                         arrayRadio = [...arrayRadio , div];
                     }else{
                         abc = "";
@@ -321,23 +321,23 @@ function NewElement(type , nombre) {
                         let div  = document.createElement("div");
                         let checkbox = document.createElement("input");
                         let label = document.createElement("label");
-    
+
                         div.setAttribute("class","form-check");
-    
+
                         checkbox.setAttribute("name", `checkbox_option_Q_${nombrediv}_C_${i+1}`);
                         checkbox.setAttribute("type", "checkbox");
                         checkbox.setAttribute("class", "form-check-input mt-1");
                         checkbox.setAttribute("value", text);
-    
+
                         let option = `option${i+1}`;
                         info[option]=text;
-    
-    
+
+
                         label.appendChild(checkbox);
                         label.appendChild(document.createTextNode(text));
-    
+
                         div.appendChild(label);
-    
+
                         arrayCheckbox = [...arrayCheckbox , div];
 
                     }else{
@@ -361,12 +361,12 @@ function NewElement(type , nombre) {
                 let select = document.createElement("select");
                 let div  = document.createElement("div");
                 let title = document.getElementById("title_question").value;
-    
+
                 div.setAttribute("class","form-group")
-    
+
                 select.setAttribute("name", `select_option_Q_${nombrediv}`);
                 select.setAttribute("class", "form-control mt-1");
-    
+
                 info = {
                     "formulaire":formulaire,
                     "description":description,
@@ -377,15 +377,15 @@ function NewElement(type , nombre) {
                     "attrname":`reponse_S_${nombrediv}`,
                     "attrplaceholder":"select",
                 };
-    
+
                 for(let i = 0 ;i<nombre ;i++) {
                     let text = document.getElementById("modal_select_option_"+(i+1)).value;
                     if(text != "" && text != null){
                         let option = document.createElement("option");
-        
+
                         let seletoption = `option${i+1}`;
                         info[seletoption]=text;
-        
+
                         option.setAttribute("value", text);
                         option.textContent = text;
                         select.appendChild(option);
@@ -394,14 +394,14 @@ function NewElement(type , nombre) {
                         abc ="";
                     }
                 }
-                
+
                 if(abc != ""){
                     div.appendChild(select);
                     return div;
                 }else{
                     messagee("Les options que vous avez créées doivent être renseignées");
                 }
-               
+
 
             }else{
                 messagee("Les options que vous avez créées doivent être renseignées");
@@ -627,8 +627,6 @@ function createselectlabel() {
 }
 
 function tostersucess() {
-
-
     Toastify({
         text: "Question ajoutée avec succès",
         duration: 3000,

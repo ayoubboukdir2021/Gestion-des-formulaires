@@ -5,12 +5,15 @@ let nombre = 1;
 let selectvalue = "";
 
 function editquestion() {
-    console.log(info);
     let modaltextarea = document.getElementById('title_question_'+questioninfo[0].id).value;
-
+    let obligatoire1 = document.getElementById('obligatoire_q1_'+questioninfo[0].id).value;
+    let obligatoire2 = document.getElementById('obligatoire_q2_'+questioninfo[0].id).value;
 
     info["titrequestion"]=modaltextarea;
-    info["obligatory"]=1;
+    if(obligatoire2.checked)
+        info["obligatory"]=0;
+    else
+        info["obligatory"]=1;
 
     if(selectvalue == "text"){
         info["control"]="input";
@@ -23,11 +26,12 @@ function editquestion() {
             data:info,
             dataType:"json",
             success: function (response) {
-                console.log(response.message);
+
                 newquestion(response.message);
             },
             error: function (response) {
                 console.log("Error");
+                tostererror();
             }
         });
 
@@ -188,7 +192,7 @@ function editquestion() {
         info["control"]="select";
         info["type"]="select";
 
-        
+
 
         info["nombreoptions"] = nombre;
 
@@ -233,6 +237,7 @@ function question(id) {
             movedata();
         },
         error: function (response) {
+            tostererror();
             console.log("Error");
         }
     });
@@ -364,6 +369,10 @@ function changeselect(valeur) {
     let label_radio = document.getElementById('modal_radio_label_'+questioninfo[0].id);
     let label_select = document.getElementById('modal_select_label_'+questioninfo[0].id);
 
+    label_checkbox.value = 0;
+    label_radio.value = 0;
+    label_select.value = 0;
+
     nombre = 1;
 
     if(valeur == "text")
@@ -449,7 +458,7 @@ function createcheckboxlabel() {
 
     nombre = document.getElementById('modal_numbers_checkbox_'+questioninfo[0].id).value;
     for(let i = 0 ;i<nombre ;i++) {
-        
+
         let name = "modal_checkbox_Q_"+questioninfo[0].id+"option_"+(i+1);
 
         div1.innerHTML += `
@@ -519,7 +528,7 @@ function newquestion(data) {
         titre.innerHTML = data[1].title;
 
         for (let i = 0; i < nombre; i++) {
-             
+
             let div2   = document.createElement("div");
             let radio = document.createElement("input");
             let label = document.createElement("label");
@@ -545,7 +554,7 @@ function newquestion(data) {
         titre.innerHTML = data[1].title;
 
         for (let i = 0; i < nombre; i++) {
-             
+
             let div2   = document.createElement("div");
             let checkbox = document.createElement("input");
             let label = document.createElement("label");
@@ -581,26 +590,26 @@ function newquestion(data) {
         div2.setAttribute("class","form-group");
         select.setAttribute("name", "reponse_"+data[1].id);
         select.setAttribute("class", "form-control");
-        
+
 
         divchange.innerHTML = "";
         titre.innerHTML = data[1].title;
 
         for (let i = 0; i < nombre; i++) {
-             
-            
-            
+
+
+
             let option = document.createElement("option");
             option.setAttribute("value", data[2][i].value);
             option.textContent =  data[2][i].value;
-            
 
-            
+
+
 
             select.appendChild(option);
-            
 
-            
+
+
         }
 
         div2.appendChild(select);
@@ -614,7 +623,7 @@ function createselectlabel() {
     div1.innerHTML = "";
 
     nombre = document.getElementById('modal_numbers_select_'+questioninfo[0].id).value;
-    
+
     for(let i = 0 ;i<nombre ;i++) {
         let name = "modal_select_Q_"+questioninfo[0].id+"option_"+(i+1);
 
@@ -628,6 +637,32 @@ function createselectlabel() {
     }
 }
 
+function tostersucess() {
+    Toastify({
+        text: "Question ajoutée avec succès",
+        duration: 3000,
+        close:true,
+        backgroundColor: "#4fbe87",
+    }).showToast();
+}
+
+function tostererror(){
+    Toastify({
+        text: "Il y a une erreur, actualisez la page",
+        duration: 3000,
+        close:true,
+        backgroundColor: "#FF0000",
+    }).showToast();
+}
+
+function messagee(description){
+    Toastify({
+        text: description,
+        duration: 3000,
+        close:true,
+        backgroundColor: "#FF0000",
+    }).showToast();
+}
 
 
 

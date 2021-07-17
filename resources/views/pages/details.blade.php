@@ -4,6 +4,10 @@
     Détails du formulaire
 @stop
 
+@section('style')
+<link rel="stylesheet" href="{{ asset('assets/vendors/toastify/toastify.css') }}">
+@endsection
+
 @section('content')
 <div class="page-heading">
     <h3>Détails du formulaire</h3>
@@ -185,6 +189,15 @@
                                                                     <div id="modal_checkbox_label_{{ $question->id }}">
 
                                                                     </div>
+
+                                                                    
+                                                                    <div class="form-check mt-4">
+                                                                        <input type="radio" id="obligatoire_q1_{{ $question->id }}"  name="obligatoire_{{ $question->id }}" class="form-check-input"/>Obligatoire
+                                                                    </div>
+                                                                    <div class="form-check">
+                                                                        <input type="radio" id="obligatoire_q2_{{ $question->id }}"  name="obligatoire_{{ $question->id }}" class="form-check-input"/>Facultatif
+                                                                    </div>
+                                                                    
                                                                 </div>
 
                                                                 <div class="mt-3">
@@ -352,6 +365,13 @@
                                                                 <div id="modal_checkbox_label_{{ $question->id }}">
 
                                                                 </div>
+
+                                                                <div class="form-check mt-4">
+                                                                    <input type="radio" id="obligatoire_q1_{{ $question->id }}"  name="obligatoire_{{ $question->id }}" class="form-check-input"/>Obligatoire
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input type="radio" id="obligatoire_q2_{{ $question->id }}"  name="obligatoire_{{ $question->id }}" class="form-check-input"/>Facultatif
+                                                                </div>
                                                             </div>
 
                                                             <div class="mt-3">
@@ -511,6 +531,13 @@
 
                                                                 <div id="modal_checkbox_label_{{ $question->id }}">
 
+                                                                </div>
+
+                                                                <div class="form-check mt-4">
+                                                                    <input type="radio" id="obligatoire_q1_{{ $question->id }}"  name="obligatoire_{{ $question->id }}" class="form-check-input"/>Obligatoire
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input type="radio" id="obligatoire_q2_{{ $question->id }}"  name="obligatoire_{{ $question->id }}" class="form-check-input"/>Facultatif
                                                                 </div>
                                                             </div>
 
@@ -675,6 +702,13 @@
                                                                 <div id="modal_checkbox_label_{{ $question->id }}">
 
                                                                 </div>
+
+                                                                <div class="form-check mt-4">
+                                                                    <input type="radio" id="obligatoire_q1_{{ $question->id }}"  name="obligatoire_{{ $question->id }}" class="form-check-input"/>Obligatoire
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input type="radio" id="obligatoire_q2_{{ $question->id }}"  name="obligatoire_{{ $question->id }}" class="form-check-input"/>Facultatif
+                                                                </div>
                                                             </div>
 
                                                             <div class="mt-3">
@@ -838,6 +872,13 @@
                                                                 <div id="modal_checkbox_label_{{ $question->id }}">
 
                                                                 </div>
+
+                                                                <div class="form-check mt-4">
+                                                                    <input type="radio" id="obligatoire_q1_{{ $question->id }}"  name="obligatoire_{{ $question->id }}" class="form-check-input"/>Obligatoire
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input type="radio" id="obligatoire_q2_{{ $question->id }}"  name="obligatoire_{{ $question->id }}" class="form-check-input"/>Facultatif
+                                                                </div>
                                                             </div>
 
                                                             <div class="mt-3">
@@ -1000,6 +1041,13 @@
 
                                                                 <div id="modal_checkbox_label_{{ $question->id }}">
 
+                                                                </div>
+
+                                                                <div class="form-check mt-4">
+                                                                    <input type="radio" id="obligatoire_q1_{{ $question->id }}"  name="obligatoire_{{ $question->id }}" class="form-check-input"/>Obligatoire
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input type="radio" id="obligatoire_q2_{{ $question->id }}"  name="obligatoire_{{ $question->id }}" class="form-check-input"/>Facultatif
                                                                 </div>
                                                             </div>
 
@@ -1170,6 +1218,13 @@
 
                                                                 <div id="modal_checkbox_label_{{ $question->id }}">
 
+                                                                </div>
+
+                                                                <div class="form-check mt-4">
+                                                                    <input type="radio" id="obligatoire_q1_{{ $question->id }}"  name="obligatoire_{{ $question->id }}" class="form-check-input"/>Obligatoire
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input type="radio" id="obligatoire_q2_{{ $question->id }}"  name="obligatoire_{{ $question->id }}" class="form-check-input"/>Facultatif
                                                                 </div>
                                                             </div>
 
@@ -1342,6 +1397,13 @@
 
                                                             <div id="modal_checkbox_label_{{ $question->id }}">
 
+                                                            </div>
+
+                                                            <div class="form-check mt-4">
+                                                                <input type="radio" id="obligatoire_q1_{{ $question->id }}"  name="obligatoire_{{ $question->id }}" class="form-check-input"/>Obligatoire
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input type="radio" id="obligatoire_q2_{{ $question->id }}"  name="obligatoire_{{ $question->id }}" class="form-check-input"/>Facultatif
                                                             </div>
                                                         </div>
 
@@ -1598,6 +1660,8 @@
 @section('script')
     <script src="{{ asset('assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
     <script src="{{ asset('js/jquery-3.6.0.min') }}"></script>
+    <script src="{{ asset('assets/vendors/toastify/toastify.js') }}"></script>
+    <script src="{{ asset('assets/js/extensions/toastify.js') }}"></script>
 
 
     <script>
