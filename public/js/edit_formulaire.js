@@ -6,220 +6,302 @@ let selectvalue = "";
 
 function editquestion() {
     let modaltextarea = document.getElementById('title_question_'+questioninfo[0].id).value;
-    let obligatoire1 = document.getElementById('obligatoire_q1_'+questioninfo[0].id).value;
-    let obligatoire2 = document.getElementById('obligatoire_q2_'+questioninfo[0].id).value;
+    let obligatoire1 = document.getElementById('obligatoire_q1_'+questioninfo[0].id);
+    let obligatoire2 = document.getElementById('obligatoire_q2_'+questioninfo[0].id);
 
     info["titrequestion"]=modaltextarea;
-    if(obligatoire2.checked)
+
+    if(obligatoire2.checked){
         info["obligatory"]=0;
-    else
+    }
+    else{
         info["obligatory"]=1;
-
-    if(selectvalue == "text"){
-        info["control"]="input";
-        info["type"]="text";
-        info["attrname"]=`reponse_Q_${info.id}`;
-
-        $.ajax({
-            method:'GET',
-            url:"/admin/form/edit/question",
-            data:info,
-            dataType:"json",
-            success: function (response) {
-
-                newquestion(response.message);
-            },
-            error: function (response) {
-                console.log("Error");
-                tostererror();
-            }
-        });
-
-    }else if(selectvalue == "email"){
-        info["control"]="input";
-        info["type"]="email";
-
-        info["attrname"]=`reponse_Q_${info.id}`;
-        $.ajax({
-            method:'GET',
-            url:"/admin/form/edit/question",
-            data:info,
-            dataType:"json",
-            success: function (response) {
-                console.log(response.message);
-                newquestion(response.message);
-            },
-            error: function (response) {
-                console.log("Error");
-            }
-        });
-    }else if(selectvalue == "date"){
-        info["control"]="input";
-        info["type"]="date";
-
-        info["attrname"]=`reponse_Q_${info.id}`;
-
-        $.ajax({
-            method:'GET',
-            url:"/admin/form/edit/question",
-            data:info,
-            dataType:"json",
-            success: function (response) {
-                console.log(response.message);
-                newquestion(response.message);
-            },
-            error: function (response) {
-                console.log("Error");
-            }
-        });
-
-
-    }else if(selectvalue == "fichier"){
-        info["control"]="input";
-        info["type"]="file";
-
-        info["attrname"]=`reponse_Q_${info.id}`;
-
-        $.ajax({
-            method:'GET',
-            url:"/admin/form/edit/question",
-            data:info,
-            dataType:"json",
-            success: function (response) {
-                console.log(response.message);
-                newquestion(response.message);
-            },
-            error: function (response) {
-                console.log("Error");
-            }
-        });
-
-    }else if(selectvalue == "heure"){
-        info["control"]="input";
-        info["type"]="time";
-
-        info["attrname"]=`reponse_Q_${info.id}`;
-
-        $.ajax({
-            method:'GET',
-            url:"/admin/form/edit/question",
-            data:info,
-            dataType:"json",
-            success: function (response) {
-                console.log(response.message);
-                newquestion(response.message);
-            },
-            error: function (response) {
-                console.log("Error");
-            }
-        });
-    }else if(selectvalue == "radio"){
-        info["control"]="input";
-        info["type"]="radio";
-
-        info["nombreoptions"] = nombre;
-
-        info["attrname"]=`reponse_Q_${info.id}`;
-
-        for (let i = 0; i < nombre; i++) {
-            let nameoption = "option"+(i+1);
-            let valeuroption = document.getElementById(nameoption);
-            info[nameoption] = valeuroption.value;
-        }
-
-        $.ajax({
-            method:'GET',
-            url:"/admin/form/edit/question",
-            data:info,
-            dataType:"json",
-            success: function (response) {
-                console.log(response.message);
-                newquestion(response.message);
-            },
-            error: function (response) {
-                console.log("Error");
-            }
-        });
-
-    }else if(selectvalue == "checkbox"){
-        info["control"]="input";
-        info["type"]="checkbox";
-
-        info["nombreoptions"] = nombre;
-
-        info["attrname"]=`reponse_Q_${info.id}`;
-
-        for (let i = 0; i < nombre; i++) {
-            let nameoption = "modal_checkbox_Q_"+questioninfo[0].id+"option_"+(i+1);
-            let valeuroption = document.getElementById(nameoption);
-            info[nameoption] = valeuroption.value;
-        }
-
-        $.ajax({
-            method:'GET',
-            url:"/admin/form/edit/question",
-            data:info,
-            dataType:"json",
-            success: function (response) {
-                console.log(response.message);
-                newquestion(response.message);
-            },
-            error: function (response) {
-                console.log("Error");
-            }
-        });
-
-    }else if(selectvalue == "textarea"){
-        info["control"]="textarea";
-        info["type"]="textarea";
-
-        info["attrname"]=`reponse_Q_${info.id}`;
-
-        $.ajax({
-            method:'GET',
-            url:"/admin/form/edit/question",
-            data:info,
-            dataType:"json",
-            success: function (response) {
-                console.log(response.message);
-                newquestion(response.message);
-            },
-            error: function (response) {
-                console.log("Error");
-            }
-        });
-    }else if(selectvalue == "select"){
-        info["control"]="select";
-        info["type"]="select";
-
-
-
-        info["nombreoptions"] = nombre;
-
-        info["attrname"]=`reponse_Q_${info.id}`;
-
-        for (let i = 0; i < nombre; i++) {
-            let nameoption = "modal_select_Q_"+questioninfo[0].id+"option_"+(i+1);
-            let valeuroption = document.getElementById(nameoption);
-            info[nameoption] = valeuroption.value;
-        }
-        console.log(info);
-
-        $.ajax({
-            method:'GET',
-            url:"/admin/form/edit/question",
-            data:info,
-            dataType:"json",
-            success: function (response) {
-                console.log(response.message);
-                newquestion(response.message);
-            },
-            error: function (response) {
-                console.log("Error");
-            }
-        });
     }
 
+    // let label_checkbox = document.getElementById('modal_checkbox_label_'+questioninfo[0].id);
+
+    // let label_select = document.getElementById('modal_select_label_'+questioninfo[0].id);
+    if(modaltextarea != null && modaltextarea != ""){
+        if(selectvalue != ""){
+            if(modaltextarea != null && modaltextarea != ""){
+                if(selectvalue == "text"){
+                    info["control"]="input";
+                    info["type"]="text";
+                    info["attrname"]=`reponse_Q_${info.id}`;
+
+                    $.ajax({
+                        method:'GET',
+                        url:"/admin/form/edit/question",
+                        data:info,
+                        dataType:"json",
+                        success: function (response) {
+                            tostersucess();
+                            newquestion(response.message);
+                        },
+                        error: function (response) {
+                            console.log("Error");
+                            tostererror();
+                        }
+                    });
+
+                }else if(selectvalue == "email"){
+                    info["control"]="input";
+                    info["type"]="email";
+
+                    info["attrname"]=`reponse_Q_${info.id}`;
+                    $.ajax({
+                        method:'GET',
+                        url:"/admin/form/edit/question",
+                        data:info,
+                        dataType:"json",
+                        success: function (response) {
+                            tostersucess();
+                            newquestion(response.message);
+                        },
+                        error: function (response) {
+                            console.log("Error");
+                            tostererror();
+                        }
+                    });
+                }else if(selectvalue == "date"){
+                    info["control"]="input";
+                    info["type"]="date";
+
+                    info["attrname"]=`reponse_Q_${info.id}`;
+
+                    $.ajax({
+                        method:'GET',
+                        url:"/admin/form/edit/question",
+                        data:info,
+                        dataType:"json",
+                        success: function (response) {
+                            tostersucess();
+                            newquestion(response.message);
+                        },
+                        error: function (response) {
+                            console.log("Error");
+                            tostererror();
+                        }
+                    });
+
+                }else if(selectvalue == "fichier"){
+                    info["control"]="input";
+                    info["type"]="file";
+
+                    info["attrname"]=`reponse_Q_${info.id}`;
+
+                    $.ajax({
+                        method:'GET',
+                        url:"/admin/form/edit/question",
+                        data:info,
+                        dataType:"json",
+                        success: function (response) {
+                            tostersucess();
+                            newquestion(response.message);
+                        },
+                        error: function (response) {
+                            ctostererror();
+                        }
+                    });
+
+                }else if(selectvalue == "heure"){
+                    info["control"]="input";
+                    info["type"]="time";
+
+                    info["attrname"]=`reponse_Q_${info.id}`;
+
+                    $.ajax({
+                        method:'GET',
+                        url:"/admin/form/edit/question",
+                        data:info,
+                        dataType:"json",
+                        success: function (response) {
+                            ctostersucess();
+                            newquestion(response.message);
+                        },
+                        error: function (response) {
+                            tostererror();
+                        }
+                    });
+                }else if(selectvalue == "radio"){
+                    nombre = document.getElementById('modal_numbers_radio_'+questioninfo[0].id).value;
+                    if(nombre>=2){
+                        let abcname = "option1";
+                        abc = document.getElementById(abcname);
+                        if(abc != null && abc != "" ){
+                            info["control"]="input";
+                            info["type"]="radio";
+
+                            info["nombreoptions"] = nombre;
+
+                            info["attrname"]=`reponse_Q_${info.id}`;
+
+
+                            for (let i = 0; i < nombre; i++) {
+                                let nameoption = "option"+(i+1);
+                                let valeuroption = document.getElementById(nameoption);
+                                if(valeuroption.value != null && valeuroption.value != "" ){
+                                    info[nameoption] = valeuroption.value;
+                                }else {
+                                    abc = "";
+                                }
+                            }
+
+                            if(abc != null && abc != "" ){
+                                $.ajax({
+                                    method:'GET',
+                                    url:"/admin/form/edit/question",
+                                    data:info,
+                                    dataType:"json",
+                                    success: function (response) {
+                                        tostersucess();
+                                        newquestion(response.message);
+                                    },
+                                    error: function (response) {
+                                        tostererror();
+                                    }
+                                });
+                            }else{
+                                messagee("Les options que vous avez créées doivent être renseignées");
+                            }
+                        }else{
+                            messagee("Les options que vous avez créées doivent être renseignées");
+                        }
+
+                    }else{
+                        messagee("Choix multiple: Les options doivent être égales ou supérieures à deux");
+                    }
+
+                }else if(selectvalue == "checkbox"){
+                    nombre = document.getElementById('modal_numbers_checkbox_'+questioninfo[0].id).value;
+                    if(nombre>=2){
+                        info["control"]="input";
+                        info["type"]="checkbox";
+
+                        info["nombreoptions"] = nombre;
+
+                        info["attrname"]=`reponse_Q_${info.id}`;
+                        let abc = "";
+
+                        let abcname = "modal_checkbox_Q_"+questioninfo[0].id+"option_"+1;
+                        abc = document.getElementById(abcname);
+
+                        if(abc != null && abc != "" ){
+
+                            for (let i = 0; i < nombre; i++) {
+                                let nameoption = "modal_checkbox_Q_"+questioninfo[0].id+"option_"+(i+1);
+                                let valeuroption = document.getElementById(nameoption);
+                                if(valeuroption.value != null && valeuroption.value != "" ){
+                                    abc = valeuroption.value
+                                    info[nameoption] = valeuroption.value;
+                                }else{
+                                    abc = "";
+                                }
+                            }
+
+                            if(abc != null && abc != "" ){
+                                $.ajax({
+                                    method:'GET',
+                                    url:"/admin/form/edit/question",
+                                    data:info,
+                                    dataType:"json",
+                                    success: function (response) {
+                                        tostersucess();
+                                        newquestion(response.message);
+                                    },
+                                    error: function (response) {
+                                        tostererror();
+                                    }
+                                });
+                            }else{
+                                messagee("Les options que vous avez créées doivent être renseignées");
+                            }
+                        }else{
+                            messagee("Les options que vous avez créées doivent être renseignées");
+                        }
+                    }else{
+                        messagee("Cases à cocher : Les options doivent être égales ou supérieures à deux");
+                    }
+
+                }else if(selectvalue == "textarea"){
+                    info["control"]="textarea";
+                    info["type"]="textarea";
+
+                    info["attrname"]=`reponse_Q_${info.id}`;
+
+                    $.ajax({
+                        method:'GET',
+                        url:"/admin/form/edit/question",
+                        data:info,
+                        dataType:"json",
+                        success: function (response) {
+                            tostersucess();
+                            newquestion(response.message);
+                        },
+                        error: function (response) {
+                            tostererror();
+                        }
+                    });
+                }else if(selectvalue == "select"){
+                    nombre = document.getElementById('modal_numbers_select_'+questioninfo[0].id).value;
+                    if(nombre>=2){
+                        info["control"]="select";
+                        info["type"]="select";
+
+
+                        let abc = "";
+                        let abcname = "modal_select_Q_"+questioninfo[0].id+"option_"+1;
+                        abc = document.getElementById(abcname);
+
+
+                        info["nombreoptions"] = nombre;
+
+                        info["attrname"]=`reponse_Q_${info.id}`;
+                        if(abc != null && abc != "" ){
+
+                            for (let i = 0; i < nombre; i++) {
+                                let nameoption = "modal_select_Q_"+questioninfo[0].id+"option_"+(i+1);
+                                let valeuroption = document.getElementById(nameoption);
+                                if(valeuroption.value != null && valeuroption.value != "" ){
+                                    info[nameoption] = valeuroption.value;
+                                }else{
+                                    abc = "";
+                                }
+                            }
+                            if(abc != null && abc != "" ){
+                                $.ajax({
+                                    method:'GET',
+                                    url:"/admin/form/edit/question",
+                                    data:info,
+                                    dataType:"json",
+                                    success: function (response) {
+                                        console.log(response.message);
+                                        tostersucess();
+                                        newquestion(response.message);
+                                    },
+                                    error: function (response) {
+                                        tostererror();
+                                    }
+                                });
+                            }else{
+                                messagee("Les options que vous avez créées doivent être renseignées");
+                            }
+                        }else{
+                            messagee("Les options que vous avez créées doivent être renseignées");
+                        }
+                    }else{
+                        messagee("List déroulante : Les options doivent être égales ou supérieures à deux");
+                    }
+                }
+            }else{
+                messagee("La question doit être saisie");
+            }
+        }else{
+            messagee("Vous devez spécifier un contrôle");
+        }
+    }else{
+        messagee("La question doit être saisie");
+    }
 }
 
 function question(id) {
@@ -247,38 +329,110 @@ function question(id) {
 function movedata() {
     if(questioninfo[0].controls[0].name == "input") {
         if(questioninfo[0].controls[0].type == "text") {
+            console.log(questioninfo[0]);
             let modaltextarea = document.getElementById('title_question_'+questioninfo[0].id);
             let selectchange = document.getElementById("dropdownMenuButtonIcon_"+questioninfo[0].id);
+            let obligatoire1 = document.getElementById('obligatoire_q1_'+questioninfo[0].id);
+            let obligatoire2 = document.getElementById('obligatoire_q2_'+questioninfo[0].id);
+
+            if(questioninfo[0].obligatory == 0){
+                obligatoire1.checked = false;
+                obligatoire2.checked = true;
+            }else{
+                obligatoire1.checked = true;
+                obligatoire2.checked = false;
+            }
             selectchange.textContent = `Réponse court`;
             modaltextarea.value = questioninfo[0].title;
             selectvalue = "text";
         }else if(questioninfo[0].controls[0].type == "email"){
             let modaltextarea = document.getElementById('title_question_'+questioninfo[0].id);
             let selectchange = document.getElementById("dropdownMenuButtonIcon_"+questioninfo[0].id);
+
+            let obligatoire1 = document.getElementById('obligatoire_q1_'+questioninfo[0].id);
+            let obligatoire2 = document.getElementById('obligatoire_q2_'+questioninfo[0].id);
+
+            if(questioninfo[0].obligatory == 0){
+                obligatoire1.checked = false;
+                obligatoire2.checked = true;
+            }else{
+                obligatoire1.checked = true;
+                obligatoire2.checked = false;
+            }
+
             selectchange.textContent = `E-mail`;
             modaltextarea.value = questioninfo[0].title;
             selectvalue = "email";
         }else if(questioninfo[0].controls[0].type == "date"){
             let modaltextarea = document.getElementById('title_question_'+questioninfo[0].id);
             let selectchange = document.getElementById("dropdownMenuButtonIcon_"+questioninfo[0].id);
+
+            let obligatoire1 = document.getElementById('obligatoire_q1_'+questioninfo[0].id);
+            let obligatoire2 = document.getElementById('obligatoire_q2_'+questioninfo[0].id);
+
+            if(questioninfo[0].obligatory == 0){
+                obligatoire1.checked = false;
+                obligatoire2.checked = true;
+            }else{
+                obligatoire1.checked = true;
+                obligatoire2.checked = false;
+            }
+
             selectchange.textContent = `Date`;
             modaltextarea.value = questioninfo[0].title;
             selectvalue = "date";
         }else if(questioninfo[0].controls[0].type == "time"){
             let modaltextarea = document.getElementById('title_question_'+questioninfo[0].id);
             let selectchange = document.getElementById("dropdownMenuButtonIcon_"+questioninfo[0].id);
+
+            let obligatoire1 = document.getElementById('obligatoire_q1_'+questioninfo[0].id);
+            let obligatoire2 = document.getElementById('obligatoire_q2_'+questioninfo[0].id);
+
+            if(questioninfo[0].obligatory == 0){
+                obligatoire1.checked = false;
+                obligatoire2.checked = true;
+            }else{
+                obligatoire1.checked = true;
+                obligatoire2.checked = false;
+            }
+
             selectchange.textContent = `Heure`;
             modaltextarea.value = questioninfo[0].title;
             selectvalue = "heure";
         }else if(questioninfo[0].controls[0].type == "file"){
             let modaltextarea = document.getElementById('title_question_'+questioninfo[0].id);
             let selectchange = document.getElementById("dropdownMenuButtonIcon_"+questioninfo[0].id);
+
+            let obligatoire1 = document.getElementById('obligatoire_q1_'+questioninfo[0].id);
+            let obligatoire2 = document.getElementById('obligatoire_q2_'+questioninfo[0].id);
+
+            if(questioninfo[0].obligatory == 0){
+                obligatoire1.checked = false;
+                obligatoire2.checked = true;
+            }else{
+                obligatoire1.checked = true;
+                obligatoire2.checked = false;
+            }
+
+
             selectchange.textContent = `Importer un ficher`;
             modaltextarea.value = questioninfo[0].title;
             selectvalue = "fichier";
         }else if(questioninfo[0].controls[0].type == "checkbox"){
             let modaltextarea = document.getElementById('title_question_'+questioninfo[0].id);
             let selectchange = document.getElementById("dropdownMenuButtonIcon_"+questioninfo[0].id);
+
+            let obligatoire1 = document.getElementById('obligatoire_q1_'+questioninfo[0].id);
+            let obligatoire2 = document.getElementById('obligatoire_q2_'+questioninfo[0].id);
+
+            if(questioninfo[0].obligatory == 0){
+                obligatoire1.checked = false;
+                obligatoire2.checked = true;
+            }else{
+                obligatoire1.checked = true;
+                obligatoire2.checked = false;
+            }
+
             selectchange.textContent = `Cases à cocher`;
             modaltextarea.value = questioninfo[0].title;
 
@@ -303,6 +457,17 @@ function movedata() {
         }else if(questioninfo[0].controls[0].type == "radio"){
             let modaltextarea = document.getElementById('title_question_'+questioninfo[0].id);
             let selectchange = document.getElementById("dropdownMenuButtonIcon_"+questioninfo[0].id);
+            let obligatoire1 = document.getElementById('obligatoire_q1_'+questioninfo[0].id);
+            let obligatoire2 = document.getElementById('obligatoire_q2_'+questioninfo[0].id);
+
+            if(questioninfo[0].obligatory == 0){
+                obligatoire1.checked = false;
+                obligatoire2.checked = true;
+            }else{
+                obligatoire1.checked = true;
+                obligatoire2.checked = false;
+            }
+
             selectchange.textContent = `Choix multiples`;
             modaltextarea.value = questioninfo[0].title;
 
@@ -327,6 +492,17 @@ function movedata() {
     }else if(questioninfo[0].controls[0].name == "select"){
         let modaltextarea = document.getElementById('title_question_'+questioninfo[0].id);
         let selectchange = document.getElementById("dropdownMenuButtonIcon_"+questioninfo[0].id);
+
+        let obligatoire1 = document.getElementById('obligatoire_q1_'+questioninfo[0].id);
+        let obligatoire2 = document.getElementById('obligatoire_q2_'+questioninfo[0].id);
+
+        if(questioninfo[0].obligatory == 0){
+            obligatoire1.checked = false;
+            obligatoire2.checked = true;
+        }else{
+            obligatoire1.checked = true;
+            obligatoire2.checked = false;
+        }
         selectchange.textContent = `List déroulante`;
         modaltextarea.value = questioninfo[0].title;
 
@@ -350,6 +526,18 @@ function movedata() {
     }else if(questioninfo[0].controls[0].name == "textarea"){
         let modaltextarea = document.getElementById('title_question_'+questioninfo[0].id);
         let selectchange = document.getElementById("dropdownMenuButtonIcon_"+questioninfo[0].id);
+
+        let obligatoire1 = document.getElementById('obligatoire_q1_'+questioninfo[0].id);
+        let obligatoire2 = document.getElementById('obligatoire_q2_'+questioninfo[0].id);
+
+        if(questioninfo[0].obligatory == 0){
+            obligatoire1.checked = false;
+            obligatoire2.checked = true;
+        }else{
+            obligatoire1.checked = true;
+            obligatoire2.checked = false;
+        }
+
         selectchange.textContent = `Paragraphe`;
         modaltextarea.value = questioninfo[0].title;
 
@@ -374,6 +562,10 @@ function changeselect(valeur) {
     label_select.value = 0;
 
     nombre = 1;
+
+    label_checkbox.value = 0;
+    label_radio.value = 0;
+    label_select.value = 0;
 
     if(valeur == "text")
         button.textContent = `Réponse court`;
@@ -639,7 +831,7 @@ function createselectlabel() {
 
 function tostersucess() {
     Toastify({
-        text: "Question ajoutée avec succès",
+        text: "La question a été modifiée avec succès",
         duration: 3000,
         close:true,
         backgroundColor: "#4fbe87",

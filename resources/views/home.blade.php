@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
 @section('title')
-    Dashboard
+    Tableau de bord
 @stop
 
 @section('content')
 <div class="page-heading">
-    <h3>Dashboard</h3>
+    <h3>Tableau de bord</h3>
 </div>
 
 <div class="page-content">

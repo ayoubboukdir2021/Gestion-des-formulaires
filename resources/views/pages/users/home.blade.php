@@ -36,19 +36,19 @@
                             @foreach ($question->controls()->get() as $control)
                                 @if( $control->name == "input")
                                     @if($control->type == "text")
-                                        <input type="text" class="form-control" name="input_text_q_{{ $question->id }}" placeholder="écris quelque chose" value="{{ old( $question->id ) }}" required />
+                                        <input type="text" class="form-control" name="input_text_q_{{ $question->id }}" placeholder="écris quelque chose" value="{{ old( $question->id ) }}" />
                                         @error('input_text_q_{{ $question->id }}')<span class="text-danger">{{ $message }}</span>@enderror
                                     @elseif($control->type == "date")
-                                        <input type="date" class="form-control" name="input_date_q_{{ $question->id }}" placeholder="écris quelque chose" value="{{ old( $question->id ) }}"  required/>
+                                        <input type="date" class="form-control" name="input_date_q_{{ $question->id }}" placeholder="écris quelque chose" value="{{ old( $question->id ) }}"  />
                                         @error('input_date_q_{{ $question->id }}')<span class="text-danger">{{ $message }}</span>@enderror
                                     @elseif($control->type == "email")
-                                        <input type="email" class="form-control" name="input_email_q_{{ $question->id }}" placeholder="écris quelque chose" value="{{ old( $question->id ) }}" required/>
+                                        <input type="email" class="form-control" name="input_email_q_{{ $question->id }}" placeholder="écris quelque chose" value="{{ old( $question->id ) }}" />
                                         @error('input_email_q_{{ $question->id }}')<span class="text-danger">{{ $message }}</span>@enderror
                                     @elseif($control->type == "time")
-                                        <input type="time" class="form-control" name="input_time_q_{{ $question->id }}" placeholder="écris quelque chose" value="{{ old( $question->id ) }}"  required/>
+                                        <input type="time" class="form-control" name="input_time_q_{{ $question->id }}" placeholder="écris quelque chose" value="{{ old( $question->id ) }}" />
                                         @error('input_time_q_{{ $question->id }}')<span class="text-danger">{{ $message }}</span>@enderror
                                     @elseif($control->type == "file")
-                                        <input type="file" class="form-control" name="input_file_q_{{ $question->id }}" required/>
+                                        <input type="file" class="form-control" name="input_file_q_{{ $question->id }}" />
                                         @error('input_file_q_{{ $question->id }}')<span class="text-danger">{{ $message }}</span>@enderror
                                     @elseif($control->type == "radio")
                                         @foreach ($control->options()->get() as $option)
@@ -72,7 +72,7 @@
                                         @endforeach
                                     @endif
                                 @elseif($control->name == "textarea")
-                                    <textarea class="form-control" name="textarea_q_{{ $question->id }}" cols="30" rows="2" placeholder="écris quelque chose" value="{{ old( $question->id ) }}" required></textarea>
+                                    <textarea class="form-control" name="textarea_q_{{ $question->id }}" cols="30" rows="2" placeholder="écris quelque chose" value="{{ old( $question->id ) }}" ></textarea>
                                     @error('textarea_q_{{ $question->id }}')<span class="text-danger">{{ $message }}</span>@enderror
                                 @elseif($control->name == "select")
                                     <select name="select_q_{{ $question->id }}" class="form-control">
@@ -85,6 +85,12 @@
                             @endforeach
 
                         </div>
+
+                         
+                        @if($question->obligatory == 1)
+                            <p class="text-danger">*Obligatoire</p>
+                        @endif
+                        
                     </div>
                 </section>
             @endforeach

@@ -37,6 +37,9 @@
                 <li class="submenu-item">
                     <a href="{{ route('add.admin') }}">Ajouter un administrateur - superviseur</a>
                 </li>
+                <li class="submenu-item">
+                    <a href="{{ route('list.users') }}">List des utilisateur</a>
+                </li>
             </ul>
         </li>
 

@@ -6,6 +6,7 @@ use App\Models\Answer;
 use App\Models\Form;
 use App\Models\FormUser;
 use App\Models\User;
+use App\Models\Question;
 use GuzzleHttp\Psr7\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -68,86 +69,115 @@ class UserController extends Controller
                     $idquestion = $arrayname[3];
                     $key = $arrayname[0]."_".$arrayname[1]."_q_".$idquestion;
 
-                    $validator = Validator::make($request->all(), [
-                        $key => 'required|email',
-                    ]);
+                    $obligatory = Question::find($idquestion)->get();
+                    $obligatory = $obligatory->first()->obligatory;
 
-                    if($validator->fails()) {
-                        Formuser::destroy( $formUser->id);
-                        return redirect()->back()->with([
-                            'message' => "Il y a une question sans réponse",
-                            'alert-type' => 'danger',
+                    if($obligatory == 1){
+                        $validator = Validator::make($request->all(), [
+                            $key => 'required|email',
                         ]);
+
+                        if($validator->fails()) {
+                            Formuser::destroy( $formUser->id);
+                            return redirect()->back()->with([
+                                'message' => "Il y a une question sans réponse",
+                                'alert-type' => 'danger',
+                            ]);
+                        }
                     }
 
-                    $answer = new Answer();
-                    $answer->reponse = $request->$key;
-                    $answer->question_id = $idquestion;
-                    $answer->form_user_id = $formUser->id;
-                    $answer->save();
+                    if($request->$key != ""){
+                        $answer = new Answer();
+                        $answer->reponse = $request->$key;
+                        $answer->question_id = $idquestion;
+                        $answer->form_user_id = $formUser->id;
+                        $answer->save();
+                    }
 
                 }else if($arrayname[1] == "text"){
                     $idquestion = $arrayname[3];
                     $key = $arrayname[0]."_".$arrayname[1]."_q_".$idquestion;
 
-                    $validator = Validator::make($request->all(), [
-                        $key => 'required',
-                    ]);
+                    $obligatory = Question::find($idquestion)->get();
+                    $obligatory = $obligatory->first()->obligatory;
 
-                    if($validator->fails()) {
-                        Formuser::destroy( $formUser->id);
-                        return redirect()->back()->with([
-                            'message' => "Il y a une question sans réponse",
-                            'alert-type' => 'danger',
+                    if($obligatory == 1){
+
+                        $validator = Validator::make($request->all(), [
+                        $key => 'required',
                         ]);
+
+                        if($validator->fails()) {
+                            Formuser::destroy( $formUser->id);
+                            return redirect()->back()->with([
+                                'message' => "Il y a une question sans réponse",
+                                'alert-type' => 'danger',
+                            ]);
+                        }
+
                     }
 
-                    $answer = new Answer();
-                    $answer->reponse = $request->$key;
-                    $answer->question_id = $idquestion;
-                    $answer->form_user_id = $formUser->id;
-                    $answer->save();
+                    if($request->$key != ""){
+                        $answer = new Answer();
+                        $answer->reponse = $request->$key;
+                        $answer->question_id = $idquestion;
+                        $answer->form_user_id = $formUser->id;
+                        $answer->save();
+                    }
+                    
 
                 }else if($arrayname[1] == "date"){
                     $idquestion = $arrayname[3];
                     $key = $arrayname[0]."_".$arrayname[1]."_q_".$idquestion;
 
-                    $validator = Validator::make($request->all(), [
-                        $key => 'required',
-                    ]);
+                    $obligatory = Question::find($idquestion)->get();
+                    $obligatory = $obligatory->first()->obligatory;
 
-                    if($validator->fails()) {
-                        Formuser::destroy( $formUser->id);
-                        return redirect()->back()->with([
-                            'message' => "Il y a une question sans réponse",
-                            'alert-type' => 'danger',
+                    if($obligatory == 1){
+
+                        $validator = Validator::make($request->all(), [
+                            $key => 'required',
                         ]);
+
+                        if($validator->fails()) {
+                            Formuser::destroy( $formUser->id);
+                            return redirect()->back()->with([
+                                'message' => "Il y a une question sans réponse",
+                                'alert-type' => 'danger',
+                            ]);
+                        }
                     }
 
-                    $answer = new Answer();
-                    $answer->reponse = $request->$key;
-                    $answer->question_id = $idquestion;
-                    $answer->form_user_id = $formUser->id;
-                    $answer->save();
+                    if($request->$key != ""){
+                        $answer = new Answer();
+                        $answer->reponse = $request->$key;
+                        $answer->question_id = $idquestion;
+                        $answer->form_user_id = $formUser->id;
+                        $answer->save();
+                    }
 
                 }else if($arrayname[1] == "file"){
                     $idquestion = $arrayname[3];
                     $key = $arrayname[0]."_".$arrayname[1]."_q_".$idquestion;
                     $file = $request->file($key);
 
+                    $obligatory = Question::find($idquestion)->get();
+                    $obligatory = $obligatory->first()->obligatory;
 
-                    $validator = Validator::make($request->all(), [
-                        $key => 'required|mimes:pdf,xlx,csv,jpeg,jpg,png|max:2048',
-                    ]);
-
-
-                    if($validator->fails()) {
-                        Formuser::destroy( $formUser->id);
-
-                        return redirect()->back()->with([
-                            'message' => "Fichier : pdf,xlx,csv,jpeg,jpg,png",
-                            'alert-type' => 'danger',
+                    if($obligatory == 1){
+                        $validator = Validator::make($request->all(), [
+                            $key => 'required|mimes:pdf,xlx,csv,jpeg,jpg,png|max:2048',
                         ]);
+
+
+                        if($validator->fails()) {
+                            Formuser::destroy( $formUser->id);
+
+                            return redirect()->back()->with([
+                                'message' => "Fichier : pdf,xlx,csv,jpeg,jpg,png",
+                                'alert-type' => 'danger',
+                            ]);
+                        }
                     }
 
                     $filename = $idquestion.'.'.$file->getClientOriginalExtension();
@@ -165,57 +195,74 @@ class UserController extends Controller
                     }
 
 
-
-                    $answer = new Answer();
-                    $answer->reponse =  $filename;
-                    $answer->question_id = $idquestion;
-                    $answer->form_user_id = $formUser->id;
-                    $answer->save();
+                    if($filename != ""){
+                        $answer = new Answer();
+                        $answer->reponse =  $filename;
+                        $answer->question_id = $idquestion;
+                        $answer->form_user_id = $formUser->id;
+                        $answer->save();
+                    }
 
                 }else if($arrayname[1] == "time"){
                     $idquestion = $arrayname[3];
                     $key = $arrayname[0]."_".$arrayname[1]."_q_".$idquestion;
 
-                    $validator = Validator::make($request->all(), [
-                        $key => 'required',
-                    ]);
+                    $obligatory = Question::find($idquestion)->get();
+                    $obligatory = $obligatory->first()->obligatory;
 
-                    if($validator->fails()) {
-                        Formuser::destroy( $formUser->id);
-                        return redirect()->back()->with([
-                            'message' => "Il y a une question sans réponse",
-                            'alert-type' => 'danger',
+                    if($obligatory == 1){
+
+                        $validator = Validator::make($request->all(), [
+                            $key => 'required',
                         ]);
+
+                        if($validator->fails()) {
+                            Formuser::destroy( $formUser->id);
+                            return redirect()->back()->with([
+                                'message' => "Il y a une question sans réponse",
+                                'alert-type' => 'danger',
+                            ]);
+                        }
                     }
 
-                    $answer = new Answer();
-                    $answer->reponse = $request->$key;
-                    $answer->question_id = $idquestion;
-                    $answer->form_user_id = $formUser->id;
-                    $answer->save();
+                    if($request->$key != ""){
+                        $answer = new Answer();
+                        $answer->reponse = $request->$key;
+                        $answer->question_id = $idquestion;
+                        $answer->form_user_id = $formUser->id;
+                        $answer->save();
+                    }
 
                 }else if($arrayname[1] == "radio"){
                     $idquestion = $arrayname[3];
 
                     $key = $arrayname[0]."_".$arrayname[1]."_q_".$idquestion;
 
-                    $validator = Validator::make($request->all(), [
-                        $key => 'required',
-                    ]);
+                    $obligatory = Question::find($idquestion)->get();
+                    $obligatory = $obligatory->first()->obligatory;
 
-                    if($validator->fails()) {
-                        Formuser::destroy( $formUser->id);
-                        return redirect()->back()->with([
-                            'message' => "Il y a une question sans réponse",
-                            'alert-type' => 'danger',
+                    if($obligatory == 1){
+
+                        $validator = Validator::make($request->all(), [
+                            $key => 'required',
                         ]);
+
+                        if($validator->fails()) {
+                            Formuser::destroy( $formUser->id);
+                            return redirect()->back()->with([
+                                'message' => "Il y a une question sans réponse",
+                                'alert-type' => 'danger',
+                            ]);
+                        }
                     }
 
-                    $answer = new Answer();
-                    $answer->reponse = $request->$key;
-                    $answer->question_id = $idquestion;
-                    $answer->form_user_id = $formUser->id;
-                    $answer->save();
+                    if($request->$key != ""){
+                        $answer = new Answer();
+                        $answer->reponse = $request->$key;
+                        $answer->question_id = $idquestion;
+                        $answer->form_user_id = $formUser->id;
+                        $answer->save();
+                    }
 
 
                 }else if($arrayname[1] == "checkbox"){
@@ -242,32 +289,42 @@ class UserController extends Controller
                 $idquestion = $arrayname[2];
                 $key = $arrayname[0]."_q_".$idquestion;
 
-                $answer = new Answer();
-                $answer->reponse = $request->$key;
-                $answer->question_id = $idquestion;
-                $answer->form_user_id = $formUser->id;
-                $answer->save();
+                if($request->$key != ""){
+                    $answer = new Answer();
+                    $answer->reponse = $request->$key;
+                    $answer->question_id = $idquestion;
+                    $answer->form_user_id = $formUser->id;
+                    $answer->save();
+                }
             }else if($arrayname[0] == "textarea") {
                 $idquestion = $arrayname[2];
                 $key = $arrayname[0]."_q_".$idquestion;
 
-                $validator = Validator::make($request->all(), [
-                    $key => 'required',
-                ]);
+                $obligatory = Question::find($idquestion)->get();
+                $obligatory = $obligatory->first()->obligatory;
 
-                if($validator->fails()) {
-                    Formuser::destroy( $formUser->id);
-                    return redirect()->back()->with([
-                        'message' => "Il y a une question sans réponse",
-                        'alert-type' => 'danger',
+                if($obligatory == 1){
+
+                    $validator = Validator::make($request->all(), [
+                        $key => 'required',
                     ]);
+
+                    if($validator->fails()) {
+                        Formuser::destroy( $formUser->id);
+                        return redirect()->back()->with([
+                            'message' => "Il y a une question sans réponse",
+                            'alert-type' => 'danger',
+                        ]);
+                    }
                 }
 
-                $answer = new Answer();
-                $answer->reponse = $request->$key;
-                $answer->question_id = $idquestion;
-                $answer->form_user_id = $formUser->id;
-                $answer->save();
+                if($request->$key != ""){
+                    $answer = new Answer();
+                    $answer->reponse = $request->$key;
+                    $answer->question_id = $idquestion;
+                    $answer->form_user_id = $formUser->id;
+                    $answer->save();
+                }
             }
 
         };

@@ -16,7 +16,7 @@ class CreateFormsTable extends Migration
         Schema::create('forms', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->unsignedTinyInteger('status')->default(1);
             $table->unsignedTinyInteger('confirm')->default(0);
             $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');

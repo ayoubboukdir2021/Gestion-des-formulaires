@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\UsersExport;
+use App\Models\Form;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +12,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminController extends Controller
 {
@@ -19,8 +22,13 @@ class AdminController extends Controller
     }
 
     public function index() {
-        $users = User::with('role')->where('id','!=',1)->orWhere('id','!=',2);
-        return view('pages.index' , ['page'=>'dashboard']);
+        $users = User::with('role')->whereHas("role",function($query){
+            $query->Where("id",3);
+        })->whereStatus(1)->orderBy('id' , 'desc')->get();
+
+        $inactif = User::whereStatus(0)->count();
+        $actif = Form::whereStatus(1)->count();
+        return view('pages.index' , ['page'=>'dashboard','users'=>$users,'inactif'=>$inactif,'actif'=>$actif]);
     }
 
     public function create() {
@@ -216,4 +224,107 @@ class AdminController extends Controller
     public function change_password (Request $request) {
 
     }
+
+    public function users(){
+        $users = User::with('role')->whereHas("role",function($query){
+            $query->Where("id","!=",1);
+        })->orderBy('id' , 'desc')->get();
+
+
+        return view('pages.list_users' , ['page'=>'gestion-utilisateurs','users'=>$users]);
+    }
+
+    public function usersStatus(){
+        try{
+            $users = User::with('role')->whereHas("role",function($query){
+                $query->Where("id","!=",1)->where("id","!=",2);
+            })->orderBy('id' , 'desc')->get();
+
+            foreach ($users as $user) {
+                $user->status = 0;
+                $user->save();
+            }
+
+            return redirect()->back()->with([
+                'message' => 'Modifié avec succès',
+                'alert-type' => 'success',
+            ]);
+        }catch(\Exception $e){
+            return redirect()->back()->with([
+                'message' => $e->getMessage(),
+                'alert-type' => 'danger',
+            ]);
+        }
+    }
+
+    public function userStatus($id,$status){
+        try{
+            $user = User::whereId($id)->get()->first();
+
+            if($status == 1){
+                $user->status = 0;
+                $user->save();
+            }else{
+                $user->status = 1;
+                $user->save();
+            }
+
+
+
+            return redirect()->back()->with([
+                    'message' => 'Modifié avec succès : ',
+                    'alert-type' => 'success',
+            ]);
+        }catch(\Exception $e){
+            return redirect()->back()->with([
+                'message' => $e->getMessage(),
+                'alert-type' => 'danger',
+            ]);
+        }
+    }
+
+    public function usersDelete(){
+        try{
+            $users = User::with('role')->whereHas("role",function($query){
+                $query->Where("id","!=",1)->where("id","!=",2);
+            })->orderBy('id' , 'desc')->get();
+
+            foreach ($users as $user) {
+                User::destroy($user->id);
+            }
+
+            return redirect()->back()->with([
+                'message' => 'Supprimé avec succès',
+                'alert-type' => 'success',
+            ]);
+        }catch(\Exception $e){
+            return redirect()->back()->with([
+                'message' => $e->getMessage(),
+                'alert-type' => 'danger',
+            ]);
+        }
+    }
+
+    public function userDelete($id){
+        try{
+
+            User::destroy($id);
+
+            return redirect()->back()->with([
+                'message' => 'Supprimé avec succès',
+                'alert-type' => 'success',
+            ]);
+        }catch(\Exception $e){
+            return redirect()->back()->with([
+                'message' => $e->getMessage(),
+                'alert-type' => 'danger',
+            ]);
+        }
+    }
+
+    public function usersExport(){
+        return Excel::download(new UsersExport(), 'users'.date('Y-m-d').'.xlsx',\Maatwebsite\Excel\Excel::XLSX);
+    }
+
+
 }

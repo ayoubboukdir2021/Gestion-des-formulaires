@@ -40,6 +40,13 @@ Route::get('/admin/dashboard', [App\Http\Controllers\AdminController::class, 'in
 Route::get('/admin/add-admin', [App\Http\Controllers\AdminController::class, 'create'])->name('add.admin');
 Route::POST('/admin/add-admin', [App\Http\Controllers\AdminController::class, 'store'])->name('add.admin');
 
+Route::get('/admin/users', [App\Http\Controllers\AdminController::class, 'users'])->name('list.users');
+Route::POST('/admin/users/export', [App\Http\Controllers\AdminController::class, 'usersExport'])->name('users.export');
+Route::POST('/admin/users/status', [App\Http\Controllers\AdminController::class, 'usersStatus'])->name('users.status');
+Route::get('/admin/user/{id}/status/{status}', [App\Http\Controllers\AdminController::class, 'userStatus'])->name('user.status');
+Route::POST('/admin/users/delete', [App\Http\Controllers\AdminController::class, 'usersDelete'])->name('users.delete');
+Route::get('/admin/user/{id}/delete', [App\Http\Controllers\AdminController::class, 'userDelete'])->name('user.delete');
+
 Route::get('/admin/profile', [App\Http\Controllers\AdminController::class, 'profile'])->name('admin.profile');
 Route::post('/admin/profile', [App\Http\Controllers\AdminController::class, 'update_profile'])->name('admin.profile');
 Route::get('/admin/profile/change-password', [App\Http\Controllers\AdminController::class, 'change_password'])->name('admin.change.password');
