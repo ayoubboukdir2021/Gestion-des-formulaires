@@ -65,7 +65,19 @@
                     </div>
                 </div>
             </div>
-        </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                            <div class="card-header">
+                                <h4>Statistiques de l'année {{ date('Y') }}</h4>
+                            </div>
+                            <div class="card-body">
+                                <div id="chart-profile-visit"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         <div class="col-12 col-lg-3">
             <div class="card">
                 <div class="card-body py-4 px-5">
@@ -129,5 +141,8 @@
 @endsection
 
 @section('script')
-<script src="{{ asset('assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
+    <script src="{{ asset('assets/vendors/apexcharts/apexcharts.js') }}"></script>
+    <script src="{{ asset('assets/js/pages/dashboard.js') }}"></script>
+
+    <script src="{{ asset('assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
 @endsection
